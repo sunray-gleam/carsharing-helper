@@ -23,6 +23,20 @@
         Подобрать
       </AppButton>
     </div>
+    <h2
+      v-if="tariffs.length"
+      class="tariffs__description"
+    >
+      Наиболее подходящие тарифы
+    </h2>
+    <section class="tariffs__list">
+      <TariffsCard
+        v-for="tariff in tariffs"
+        :key="tariff.rate.id"
+        :price="tariff"
+        class="tariffs__tariff-card"
+      />
+    </section>
   </article>
 </template>
 
@@ -30,19 +44,23 @@
 import Vue from 'vue'
 import AppInput from '@/components/AppInput.vue'
 import AppButton from '@/components/AppButton.vue'
+import TariffsCard from './TariffsCard.vue'
 import api from '@/api'
+import PriceResponse from '@/models/PriceResponse'
 
 export default Vue.extend({
   name: 'Tariffs',
   components: {
     AppInput,
-    AppButton
+    AppButton,
+    TariffsCard
   },
   data () {
     return {
       kilometers: '',
       driveMinutes: '',
-      parkingMinutes: ''
+      parkingMinutes: '',
+      tariffs: Array<PriceResponse>()
     }
   },
   methods: {
@@ -53,7 +71,7 @@ export default Vue.extend({
         neededParkingMinutes: this.parkingMinutes
       })
 
-      console.log(response.data)
+      this.tariffs = response.data.prices
     }
   }
 })
@@ -61,22 +79,61 @@ export default Vue.extend({
 
 <style lang="scss">
 .tariffs {
+  $margin-base: 15px;
+
   display: flex;
   flex-direction: column;
   padding: 30px 60px;
 
+  &__input {
+    flex-basis: 360px;
+  }
+
   &__row {
     display: flex;
-    flex-direction: row;
-    margin-left: -15px;
+    margin-top: -$margin-base;
+    margin-left: -$margin-base;
 
     & > * {
-      margin-left: 15px;
+      margin-top: $margin-base;
+      margin-left: $margin-base;
     }
   }
 
-  &__input {
-    flex-basis: 360px;
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -$margin-base;
+    margin-left: -$margin-base;
+
+    & > * {
+      margin-top: $margin-base;
+      margin-left: $margin-base;
+    }
+  }
+
+  &__tariff-card {
+    width: 280px;
+  }
+
+  &__description {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 30px 20px;
+  }
+
+  @media screen and (max-width: 979px) {
+    &__row {
+      flex-direction: column;
+    }
+
+    &__input {
+      flex-basis: initial;
+    }
   }
 }
 </style>

@@ -4,5 +4,6 @@ export default interface TariffDetails {
   additionalParkingPrice: number,
   neededAdditionalKilometers: number,
   neededAdditionalMinutes: number,
-  neededAdditionalParking: number
+  neededAdditionalParking: number,
+  [key: string]: number
 }

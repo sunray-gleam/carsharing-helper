@@ -7,5 +7,6 @@ export default interface RateResponse {
   name: string,
   parkingPrice: number,
   price: number,
+  id: number,
   [key: string]: number | string
 }
