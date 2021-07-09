@@ -65,6 +65,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Component from 'vue-class-component'
 import PriceResponse from '@/models/PriceResponse'
 import expandIcon from '@/assets/expand.svg'
 import unexpandIcon from '@/assets/unexpand.svg'
@@ -116,58 +117,55 @@ const detailItemsFields = [
   }
 ]
 
-export default Vue.extend({
-  name: 'TariffsCard',
+const TariffsCardProps = Vue.extend({
   props: {
     price: {
       type: Object as () => PriceResponse,
       required: true
     }
-  },
-  data () {
-    return {
-      isExpanded: false
-    }
-  },
-  computed: {
-    rateItems () {
-      return rateItemsFields.map(x => {
-        const value = this.price.rate[x.fieldName]
-
-        return {
-          name: x.name,
-          value: x.isPrice ?
-            `${value} BYN`
-            : value
-        }
-      })
-    },
-    detailItems () {
-      const mappedDetails = detailItemsFields.map(x => {
-        const value = this.price.details[x.fieldName]
-
-        return {
-          name: x.name,
-          value: x.isPrice ?
-            `${value} BYN`
-            : value
-        }
-      })
-
-      return mappedDetails
-    },
-    icon () {
-      return this.isExpanded
-        ? unexpandIcon
-        : expandIcon
-    }
-  },
-  methods: {
-    onIconClick () {
-      this.isExpanded = !this.isExpanded
-    }
   }
 })
+
+@Component
+export default class TariffsCard extends TariffsCardProps {
+  isExpanded = false
+
+  get rateItems (): Array<{ name: string, value: string | number }> {
+    return rateItemsFields.map(x => {
+      const value = this.price.rate[x.fieldName]
+
+      return {
+        name: x.name,
+        value: x.isPrice ?
+          `${value} BYN`
+          : value
+      }
+    })
+  }
+  get detailItems (): Array<{ name: string, value: string | number }> {
+    const mappedDetails = detailItemsFields.map(x => {
+      const value = this.price.details[x.fieldName]
+
+      return {
+        name: x.name,
+        value: x.isPrice ?
+          `${value} BYN`
+          : value
+      }
+    })
+
+    return mappedDetails
+  }
+  get icon (): string {
+    return this.isExpanded
+      ? unexpandIcon
+      : expandIcon
+  }
+
+  onIconClick (): void {
+    this.isExpanded = !this.isExpanded
+  }
+}
 </script>
 
 <style lang="scss">

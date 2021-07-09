@@ -105,6 +105,7 @@ export default Vue.extend({
     flex-wrap: wrap;
     margin-top: -$margin-base;
     margin-left: -$margin-base;
+    align-items: flex-start;
 
     & > * {
       margin-top: $margin-base;
