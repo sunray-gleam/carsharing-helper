@@ -90,12 +90,6 @@ const rateItemsFields = [
     name: 'Включено минут',
   },
 ]
-    // additionalKilometersPrice: number,
-    // additionalMinutesPrice: number,
-    // additionalParkingPrice: number,
-    // neededAdditionalKilometers: number,
-    // neededAdditionalMinutes: number,
-    // neededAdditionalParking: number
 const detailItemsFields = [
   {
     fieldName: 'neededAdditionalKilometers',
@@ -106,13 +100,22 @@ const detailItemsFields = [
     name: 'Дополнительные минуты'
   },
   {
+    fieldName: 'neededAdditionalParking',
+    name: 'Дополнительные парковочные минуты'
+  },
+  {
     fieldName: 'additionalKilometersPrice',
     name: 'Cтоимость доп. километража',
     isPrice: true
   },
   {
-    fieldName: 'neededAdditionalMinutes',
+    fieldName: 'additionalMinutesPrice',
     name: 'Cтоимость доп. минут',
+    isPrice: true
+  },
+  {
+    fieldName: 'additionalParkingPrice',
+    name: 'Cтоимость доп. парковки',
     isPrice: true
   }
 ]
