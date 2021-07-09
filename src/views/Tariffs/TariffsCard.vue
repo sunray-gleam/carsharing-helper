@@ -38,12 +38,36 @@
         {{ price.price }} BYN
       </strong>
     </p>
+    <div class="tariffs-card__icon-container">
+      <img
+        :src="icon"
+        class="tariffs-card__icon"
+        @click="onIconClick"
+      >
+    </div>
+    <div
+      v-if="isExpanded"
+      class="tariffs-card__cars"
+    >
+      <span> Доступные машины: </span>
+      <ul class="tariffs-card__cars-list">
+        <li
+          v-for="car in price.availableCars"
+          :key="car"
+          class="tariffs-card__car"
+        >
+          {{ car }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import PriceResponse from '@/models/PriceResponse'
+import expandIcon from '@/assets/expand.svg'
+import unexpandIcon from '@/assets/unexpand.svg'
 
 const rateItemsFields = [
   {
@@ -100,6 +124,11 @@ export default Vue.extend({
       required: true
     }
   },
+  data () {
+    return {
+      isExpanded: false
+    }
+  },
   computed: {
     rateItems () {
       return rateItemsFields.map(x => {
@@ -126,6 +155,16 @@ export default Vue.extend({
       })
 
       return mappedDetails
+    },
+    icon () {
+      return this.isExpanded
+        ? unexpandIcon
+        : expandIcon
+    }
+  },
+  methods: {
+    onIconClick () {
+      this.isExpanded = !this.isExpanded
     }
   }
 })
@@ -164,6 +203,27 @@ export default Vue.extend({
       justify-content: space-between;
       align-items: flex-end;
     }
+  }
+
+  &__icon-container {
+    display: flex;
+    justify-content: center;
+    height: 14px;
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__cars {
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  &__cars-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 }
 </style>
