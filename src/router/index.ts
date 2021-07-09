@@ -2,8 +2,8 @@ import Vue from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
 import { RouterNames } from '@/utils/index'
 
-const MainLayout = () => import(/* webpackChunkName: "Main" */ '@/layouts/MainLayout.vue')
-const Tariffs = () => import(/* webpackChunkName: "Tariffs" */ '@/views/Tariffs/Index.vue')
+import MainLayout from /* webpackChunkName: "Main" */ '@/layouts/MainLayout.vue'
+import Tariffs from /* webpackChunkName: "Tariffs" */ '@/views/Tariffs/Index.vue'
 
 Vue.use(VueRouter);
 
